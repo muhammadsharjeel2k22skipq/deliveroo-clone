@@ -1,14 +1,14 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'restaurnant',
-  title: 'Restaurnant',
+  name: 'restaurant',
+  title: 'Restaurant',
   type: 'document',
   fields: [
     defineField({
       name: 'name',
       type: 'string',
-      title: 'Restaurnant name',
+      title: 'Restaurant name',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
