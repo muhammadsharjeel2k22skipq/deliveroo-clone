@@ -1,15 +1,21 @@
-import { View, Text, ScrollView, FlatList } from 'react-native'
-import React from 'react'
-import CategoryCard from './CategoryCard';
-import FeaturedRow from './FeaturedRow';
+import { View, Text, ScrollView, } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { CategoryCard } from '../components';
+import { client } from '../sanity';
 
-const dummayArray = [
-    {id: 1, title: 'Testing', imgUrl: 'https://links.papareact.com/gn7'},
-    {id: 2, title: 'Testing', imgUrl: 'https://links.papareact.com/wru'},
-    {id: 3, title: 'Testing', imgUrl: 'https://links.papareact.com/wru'}
-];
 
 const Categories = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const query = `
+      *[_type == "category"] {
+        ...,
+      }
+    `;
+    client.fetch(query).then((res) => setCategories(res));
+  }, []);
+
   return (
     <ScrollView
        horizontal
@@ -20,7 +26,7 @@ const Categories = () => {
        }}
     >
       <View className='flex-row'>
-        {dummayArray?.map((item) => <CategoryCard title={item?.title} imgUrl={item?.imgUrl} key={item?.id} />)}
+        {categories?.map((item) => <CategoryCard title={item?.name} imgUrl={item?.image} key={item?._id} />)}
       </View>
 
     </ScrollView>

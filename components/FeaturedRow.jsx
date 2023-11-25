@@ -21,7 +21,7 @@ const FeaturedRow = ({ id, title, description }) => {
       }[0]
     `;
     client.fetch(query, { id }).then((res) => setRestaurants(res?.restaurants));
-  }, []);
+  }, [id]);
 
   return (
     <View>
