@@ -35,7 +35,7 @@ const RestaurantScreen = () => {
         <View className='px-4 pt-4'>
           <Text className='text-3xl font-bold'>{title}</Text>
 
-          <View className='flex-row space-x-2 my-1'>
+          <View className='flex-row space-x-2 my-1 max-w-[62%]'>
             <View className='flex-row items-center space-x-1'>
               <StarIcon color={'green'} size={22} opacity={0.5} />
               <Text className='text-xs text-gray-500'>
@@ -45,7 +45,7 @@ const RestaurantScreen = () => {
 
             <View className='flex-row space-x-1 items-center'>
               <MapPinIcon color='gray' opacity={0.4} size={22} />
-              <Text className='text-xs text-gray-500 max-w-[90%]'>Nearby • {address}</Text>
+              <Text className='text-xs text-gray-500'>Nearby • {address}</Text>
             </View>
           </View>
 
@@ -69,7 +69,7 @@ const RestaurantScreen = () => {
             key={key}
             id={dish?._id}
             name={dish?.name}
-            description={dish?.description}
+            description={dish?.short_description}
             price={dish?.price}
             image={dish?.image}
           />
