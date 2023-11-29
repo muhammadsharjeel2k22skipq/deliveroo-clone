@@ -1,14 +1,19 @@
 import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { urlFor } from '../sanity';
 import { ArrowLeftIcon, StarIcon } from 'react-native-heroicons/solid';
 import { ChevronRightIcon, MapPinIcon, QuestionMarkCircleIcon } from 'react-native-heroicons/outline';
+import { useDispatch } from 'react-redux';
+
 import { BasketIcon, DishRow } from '../components';
+import { setRestaurant } from '../features/restaurantSlice';
+import { urlFor } from '../sanity';
+
 
 const RestaurantScreen = () => {
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const { params: {
     id, imgUrl, title, rating, genre, address, short_description, dishes, long, lat
   } } = useRoute();
@@ -18,6 +23,12 @@ const RestaurantScreen = () => {
      headerShown: false,
     });
   }, []);
+
+  useEffect(() => {
+    dispatch(setRestaurant({
+      id, imgUrl, title, rating, genre, address, short_description, dishes, long, lat
+    }))
+  }, [dispatch]);
   
   return (
     <>
@@ -64,7 +75,7 @@ const RestaurantScreen = () => {
         </View>
 
         {/* Menu */}
-        <View>
+        <View className='pb-36'>
           <Text className='px-4 pt-6 mb-3 font-bold text-xl'>Menu</Text>
           {dishes?.map((dish, key) => (
             <DishRow 
