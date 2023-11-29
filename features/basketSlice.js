@@ -53,9 +53,11 @@ export const selectBasketItems = (state) => state.basket.items;
 
 export const selectBasketTotalPrice = (state) => state.basket.items.reduce((total, item) => {
     total += item?.price * item?.quantity;
+    return total;
 }, 0);
 export const selectBasketTotalQuantity = (state) => state.basket.items.reduce((total, item) => {
     total += item?.quantity;
+    return total;
 }, 0);
 
 export const getSelectedItemQuantity = (state, id) => {
