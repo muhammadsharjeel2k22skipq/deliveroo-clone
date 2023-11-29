@@ -32,14 +32,16 @@ export const basketSlice = createSlice({
                     let temp = state.items[index];
                     if (temp?.quantity > 0) {
                         temp = {...temp, quantity: temp.quantity - 1};
-                        state.items[index] = temp;
+                        if (temp?.quantity === 0) {
+                            state.items = [];
+                        }
+                        else {
+                            state.items[index] = temp;
+                        }
                     }
-                    else {
-                        const filteredItems = basketItems?.filter((item) => item?.id !== temp?.id);
-                        state.items = filteredItems;
-                    }
+                    
                 }
-            };
+            }
         },
     },
 });

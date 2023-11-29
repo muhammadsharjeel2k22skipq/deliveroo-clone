@@ -54,7 +54,7 @@ const DishRow = ({ id, name, description, price, image }) => {
             <View className='bg-white px-4 pt-2'>
                 <View className='flex-row items-center space-x-2 pb-3'>
                     <TouchableOpacity onPress={removeItemFromBasket}>
-                        <MinusCircleIcon size={40} color={'#00CCBB'} />
+                        <MinusCircleIcon size={40} color={getSelectedItemQuantity(id) > 0 ? '#00CCBB' : 'gray'} />
                     </TouchableOpacity>
                     <Text>{getSelectedItemQuantity(id)}</Text>
                     <TouchableOpacity onPress={addItemToBasket}>
