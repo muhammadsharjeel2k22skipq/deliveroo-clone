@@ -33,7 +33,9 @@ export const basketSlice = createSlice({
                     if (temp?.quantity > 0) {
                         temp = {...temp, quantity: temp.quantity - 1};
                         if (temp?.quantity === 0) {
-                            state.items = [];
+                            let basketItems = state.items;
+                            basketItems.splice(index, 1);
+                            state.items = basketItems;
                         }
                         else {
                             state.items[index] = temp;
@@ -48,6 +50,19 @@ export const basketSlice = createSlice({
 
 export const { addToBasket, removeFromBasket } = basketSlice.actions;
 export const selectBasketItems = (state) => state.basket.items;
+
+export const selectBasketTotalPrice = (state) => state.basket.items.reduce((total, item) => {
+    total += item?.price * item?.quantity;
+}, 0);
+export const selectBasketTotalQuantity = (state) => state.basket.items.reduce((total, item) => {
+    total += item?.quantity;
+}, 0);
+
+export const getSelectedItemQuantity = (state, id) => {
+    const basketItems = state.basket.items;
+    const selectedItem = basketItems?.find((item) => item.id === id);
+    return selectedItem?.quantity !== undefined ? selectedItem?.quantity : 0;
+}
 
 export default basketSlice.reducer;
 

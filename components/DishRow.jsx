@@ -5,12 +5,13 @@ import { MinusCircleIcon, PlusCircleIcon } from 'react-native-heroicons/solid';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { urlFor } from '../sanity';
-import { addToBasket, removeFromBasket, selectBasketItems } from '../features/basketSlice';
+import { addToBasket, getSelectedItemQuantity, removeFromBasket, selectBasketItems } from '../features/basketSlice';
 
 const DishRow = ({ id, name, description, price, image }) => {
     const [isPressed, setIsPressed] = useState(false);
     const items = useSelector(selectBasketItems);
     const dispatch = useDispatch();
+    const selectedItemQuantity = useSelector((state) => getSelectedItemQuantity(state, id));
 
     const addItemToBasket = () => {
         dispatch(addToBasket(
@@ -23,10 +24,6 @@ const DishRow = ({ id, name, description, price, image }) => {
         ));
     };
 
-    const getSelectedItemQuantity = (id) => {
-        const selectedItem = items?.find((item) => item.id === id);
-        return selectedItem?.quantity !== undefined ? selectedItem?.quantity : 0;
-    };
 
   return (
     <>
@@ -54,9 +51,9 @@ const DishRow = ({ id, name, description, price, image }) => {
             <View className='bg-white px-4 pt-2'>
                 <View className='flex-row items-center space-x-2 pb-3'>
                     <TouchableOpacity onPress={removeItemFromBasket}>
-                        <MinusCircleIcon size={40} color={getSelectedItemQuantity(id) > 0 ? '#00CCBB' : 'gray'} />
+                        <MinusCircleIcon size={40} color={selectedItemQuantity > 0 ? '#00CCBB' : 'gray'} />
                     </TouchableOpacity>
-                    <Text>{getSelectedItemQuantity(id)}</Text>
+                    <Text>{selectedItemQuantity}</Text>
                     <TouchableOpacity onPress={addItemToBasket}>
                         <PlusCircleIcon size={40} color={'#00CCBB'} />
                     </TouchableOpacity>
